@@ -18,7 +18,7 @@
 
 
 
-class memory:
+class Memory:
     def __init__(self):
         self.CODE = [0]*255
         self.DATA = [0]*255
@@ -27,7 +27,7 @@ class memory:
         for i,byte in enumerate(program):
             self.CODE[i] = byte
 
-class instruction:
+class Instruction:
     def __init__(self,opcode,a,b,C):
         self.OPCODE = opcode
         self.A = a
@@ -36,12 +36,12 @@ class instruction:
 
 class CPU:
     def __init__(self):
-        self.MEM = memory()
+        self.MEM = Memory()
         self.PC = 0
         self.HALTED = False
 
     def fetch(self):
-        ins = instruction(
+        ins = Instruction(
             self.MEM.CODE[self.PC],
             self.MEM.CODE[self.PC+1],
             self.MEM.CODE[self.PC+2],

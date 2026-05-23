@@ -3,7 +3,6 @@ import sys
 
 
 if __name__ == "__main__":
-    numArgs = len(sys.argv)
     if len(sys.argv) < 2:
         print("Usage: python main.py <filename>")
         sys.exit(1)
