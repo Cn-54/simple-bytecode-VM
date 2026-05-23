@@ -19,15 +19,19 @@
 
 
 class Memory:
+    # initialise the Memory of the Cpu with 2 arrays of size 255
     def __init__(self):
         self.CODE = [0]*255
         self.DATA = [0]*255
     
+    # loads a given program into the cpu memory
     def loadProgram(self,program):
         for i,byte in enumerate(program):
             self.CODE[i] = byte
 
+
 class Instruction:
+    # initailises each operand of the instruction
     def __init__(self,opcode,a,b,C):
         self.OPCODE = opcode
         self.A = a
@@ -35,11 +39,13 @@ class Instruction:
         self.C = C
 
 class CPU:
+    # initialises the cpu memory, the program counter and its halted flag
     def __init__(self):
         self.MEM = Memory()
         self.PC = 0
         self.HALTED = False
 
+    # fetched 4 bytes from memory and increments the program counter
     def fetch(self):
         ins = Instruction(
             self.MEM.CODE[self.PC],
@@ -50,6 +56,7 @@ class CPU:
         self.PC += 4
         return ins
 
+    # takes the current instruction and decodes it before executing it
     def decodeExecute(self,INS):
         match INS.OPCODE:
             case -1: self.HALTED = True                                               # Halt
@@ -73,14 +80,19 @@ class CPU:
             case 13:                                                                  # JEQ
                 if self.MEM.DATA[INS.A] == self.MEM.DATA[INS.B]:                      #
                     self.PC = INS.C * 4                                               #
+
+
+    # loads the memory of the cpu then runs the program until it halts
     def run(self,program):
         self.MEM.loadProgram(program)
         while not self.HALTED:
             ins = self.fetch()
             self.decodeExecute(ins)
     
+    # returns th full code memory
     def dumpCodeMemory(self):
         return self.MEM.CODE
+    #returns the full data memory
     def dumpDataMemory(self):
         return self.MEM.DATA
 
