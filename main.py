@@ -1,4 +1,5 @@
 from VM import CPU
+from assembler import assemble
 import sys
 
 
@@ -11,7 +12,11 @@ if __name__ == "__main__":
         program = None
         filename = sys.argv[1]
         with open(filename, 'r') as file:
-            program = [int(x) for x in file.read().replace("\n", "").split(",")]
+            if filename.endswith(".M"):
+                program = [int(x) for x in file.read().replace("\n", "").split(",")]
+            elif filename.endswith(".A"):
+                program = file.read().replace("\n", " ").split(" ")
+                program = assemble(program)
         file.close()
         cpu.run(program)
         print(cpu.dumpDataMemory())

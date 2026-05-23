@@ -1,0 +1,4 @@
+SET 10 0
+SET 5 1
+ADD 0 1 2
+HALT
