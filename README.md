@@ -1,34 +1,86 @@
-simple bytecode VM written in python that follows a harvard architecture and programs written with numeric mneumonics
-instructions consist of 4 "bytes" : OPCODE,A,B,C
+# Simple Bytecode VM
 
- ISA
+a simple byte code VM implementation in python.
+has a custom isa with numeric instructions and a Harvard architecture.
+programs can be written in bytecode or assembly.
+
+## Architecture
+ - consists of separated memory for code and data each 255 in size
+ - fixed width instructions | 4 values per instruction | [OPCODE,A,B,C]
+ - Harvard architecture preventing programming from modifying their own code
+
+## ISA
+
+| Opcode | Mnemonic | Operation      |
+
+| -1     | HALT | Stop execution 
+
+| 0      | NOP      | No operation 
+
+| 1  | SET   | DATA[C] = A 
+
+| 2  | LOAD  | DATA[A] = DATA[DATA[C]] 
+
+| 3  | STORE | DATA[DATA[C]] = DATA[A] 
+
+| 4  | ADD   | DATA[C] = DATA[A] + DATA[B] 
+
+| 5  | SUB   | DATA[C] = DATA[A] - DATA[B] 
+
+| 6  | MUL   | DATA[C] = DATA[A] * DATA[B] 
+
+| 7  | DIV   | DATA[C] = DATA[A] // DATA[B] 
+
+| 8  | MOD   | DATA[C] = DATA[A] % DATA[B] 
+
+| 9  | POW   | DATA[C] = DATA[A] ** DATA[B] 
+
+| 10 | JMP   | PC = C 
+
+| 11 | JGT   | if DATA[A] > DATA[B]: PC = C 
+
+| 12 | JLT   | if DATA[A] < DATA[B]: PC = C 
+
+| 13 | JEQ   | if DATA[A] == DATA[B]: PC = C 
+
+
+## Usage
  
- -1 / halt /
+```bash
+python main.py <file>
+```
  
- 0  / NO-OP / 
+Two file formats are supported:
  
- 1  / SET   / sets DATA[C] to A / immidiete
+| Extension | Format |
+
+| `.M` | Raw bytecode - comma separated integers |
+
+| `.A` | Assembly - one instruction per line |
+
+## Examples
  
- 2  / LOAD  / DATA[A] = DATA[DATA[C]] /
+### Bytecode (.M)
+```
+1,10,0,0,
+1,5,0,1,
+4,0,1,2,
+-1,0,0,0
+```
  
- 3  / STORE / DATA[DATA[C]] = DATA[A] /
+### Assembly (.A)
+```
+SET 10 0
+SET 5 1
+ADD 0 1 2
+HALT
+```
+Both programs load 10 into DATA[0], 5 into DATA[1], add them and store the result in DATA[2].
+
+## Project Structure
  
- 4  / ADD   / Adds data[A] and data[B] into data[C]
- 
- 5  / SUB   / subtracts data[A] and data[B] into data[C]
- 
- 6  / MUL   / multiplies data[A] and data[B] into data[C]
- 
- 7  / DIV   / divides data[A] and data[B] into data[C] / always rounds
- 
- 8  / MOD   / modulos data[A] and data[B] into data[C]
- 
- 9  / POW   / does data[A] to the power of data[B] into data[C]
- 
- 10 / JMP   / always jumps to C
- 
- 11 / JGT   / jumps to C if DATA[A] > DATA[B]
- 
- 12 / JLT   / jumps to C if DATA[A] < DATA[B]
- 
- 13 / JEQ   / jumps to C if DATA[A] = DATA[B]
+```
+├── VM.py          # Memory, Instruction and CPU classes
+├── assembler.py   # Assembles .A files into bytecode
+└── main.py        # CLI entry point
+```
