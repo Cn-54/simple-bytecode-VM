@@ -1,5 +1,5 @@
 # ISA
-# -1 / halt /
+# -1 / halt  /
 # 0  / NO-OP / 
 # 1  / SET   / sets DATA[C] to A / immidiete
 # 2  / LOAD  / DATA[A] = DATA[DATA[C]] /
@@ -14,6 +14,13 @@
 # 11 / JGT   / jumps to C if DATA[A] > DATA[B]
 # 12 / JLT   / jumps to C if DATA[A] < DATA[B]
 # 13 / JEQ   / jumps to C if DATA[A] = DATA[B]
+# 14 / OUT   / prints DATA[A] as a number
+# 15 / PUT   / prints DATA[A] as its ASCII character no new line
+# 16 / INP   / prompts user for input, stores in DATA[A]
+# 17 / ONL   / prints a new line
+# 18 / PUTI  / prints DATA[DATA[A]] as its ASCII character no new line
+# 19 / OUTI  / prints DATA[DATA[A]] as a number
+# 20 / INPI  / prompts user for input, stores in DATA[DATA[A]]
 
 
 
@@ -80,10 +87,26 @@ class CPU:
             case 13:                                                                  # JEQ
                 if self.MEM.DATA[INS.A] == self.MEM.DATA[INS.B]:                      #
                     self.PC = INS.C * 4                                               #
+            case 14: print(self.MEM.DATA[INS.A])                                      # OUT
+            case 15: print(chr(self.MEM.DATA[INS.A]), end="")                         # PUT
+            case 16:                                                                  # INP
+                try:                                                                  #
+                    self.MEM.DATA[INS.A] = int(input("> "))                           #
+                except ValueError:                                                    #
+                    print(f"[CPU]: INP expected a number")                            #
+                    self.HALTED = True                                                #
+            case 17: print("")                                                        # ONL
+            case 18: print(chr(self.MEM.DATA[self.MEM.DATA[INS.A]]), end="")          # PUTI
+            case 19: print(self.MEM.DATA[self.MEM.DATA[INS.A]])                       # OUTI
+            case 20:                                                                  # INPI
+                try:                                                                  #
+                    self.MEM.DATA[self.MEM.DATA[INS.A]] = int(input("> "))            #
+                except ValueError:                                                    #
+                    print(f"[CPU]: INP expected a number")                            #
+                    self.HALTED = True  
             case _:
                 print(f"[CPU]: Address {self.PC} : Unknown opcode: {INS.OPCODE}")
                 self.HALTED = True
-
 
     # loads the memory of the cpu then runs the program until it halts
     def run(self,program):
@@ -98,5 +121,3 @@ class CPU:
     #returns the full data memory
     def dumpDataMemory(self):
         return self.MEM.DATA
-
-        

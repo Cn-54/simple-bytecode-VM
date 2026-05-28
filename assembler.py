@@ -59,6 +59,27 @@ def assemble(program):
             case "JEQ":
                 output.extend([13, int(program[i+1]), int(program[i+2]), int(program[i+3])])
                 i += 4
+            case "OUT":
+                output.extend([14, int(program[i+1]),0,0])
+                i += 2
+            case "PUT":
+                output.extend([15, int(program[i+1]),0,0])
+                i += 2
+            case "INP":
+                output.extend([16, int(program[i+1]),0,0])
+                i += 2
+            case "ONL":
+                output.extend([17,0,0,0])
+                i += 1
+            case "PUTI":
+                output.extend([18, int(program[i+1]),0,0])
+                i += 2
+            case "OUTI":
+                output.extend([19, int(program[i+1]),0,0])
+                i += 2
+            case "INPI":
+                output.extend([20, int(program[i+1]),0,0])
+                i += 2
             case _:
                 print(f"[Assembler]: instruction {instruction_num} : Unknown opcode: {x}")
                 error = True

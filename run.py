@@ -19,4 +19,3 @@ if __name__ == "__main__":
                 program = assemble(program)
         file.close()
         cpu.run(program)
-        print(cpu.dumpDataMemory())
