@@ -75,5 +75,5 @@ Both programs load 10 into DATA[0], 5 into DATA[1], add them and store the resul
 ```
 ├── VM.py          # Memory, Instruction and CPU classes
 ├── assembler.py   # Assembles .A files into bytecode
-└── main.py        # CLI entry point
+└── run.py        # CLI entry point
 ```
