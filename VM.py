@@ -80,6 +80,9 @@ class CPU:
             case 13:                                                                  # JEQ
                 if self.MEM.DATA[INS.A] == self.MEM.DATA[INS.B]:                      #
                     self.PC = INS.C * 4                                               #
+            case _:
+                print(f"[CPU]: Address {self.PC} : Unknown opcode: {INS.OPCODE}")
+                self.HALTED = True
 
 
     # loads the memory of the cpu then runs the program until it halts
