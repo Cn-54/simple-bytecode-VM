@@ -11,37 +11,30 @@ programs can be written in bytecode or assembly.
 
 ## ISA
 
-| Opcode | Mnemonic | Operation      |
-
-| -1     | HALT | Stop execution 
-
-| 0      | NOP      | No operation 
-
-| 1  | SET   | DATA[C] = A 
-
-| 2  | LOAD  | DATA[A] = DATA[DATA[C]] 
-
-| 3  | STORE | DATA[DATA[C]] = DATA[A] 
-
-| 4  | ADD   | DATA[C] = DATA[A] + DATA[B] 
-
-| 5  | SUB   | DATA[C] = DATA[A] - DATA[B] 
-
-| 6  | MUL   | DATA[C] = DATA[A] * DATA[B] 
-
-| 7  | DIV   | DATA[C] = DATA[A] // DATA[B] 
-
-| 8  | MOD   | DATA[C] = DATA[A] % DATA[B] 
-
-| 9  | POW   | DATA[C] = DATA[A] ** DATA[B] 
-
-| 10 | JMP   | PC = C 
-
-| 11 | JGT   | if DATA[A] > DATA[B]: PC = C 
-
-| 12 | JLT   | if DATA[A] < DATA[B]: PC = C 
-
-| 13 | JEQ   | if DATA[A] == DATA[B]: PC = C 
+| Opcode | Mnemonic | Operation |
+|--------|----------|-----------|
+| -1 | HALT | Stop execution |
+| 0 | NOP | No operation |
+| 1 | SET | DATA[C] = A (immediate) |
+| 2 | LOAD | DATA[A] = DATA[DATA[C]] |
+| 3 | STORE | DATA[DATA[C]] = DATA[A] |
+| 4 | ADD | DATA[C] = DATA[A] + DATA[B] |
+| 5 | SUB | DATA[C] = DATA[A] - DATA[B] |
+| 6 | MUL | DATA[C] = DATA[A] * DATA[B] |
+| 7 | DIV | DATA[C] = DATA[A] // DATA[B] (always rounds down) |
+| 8 | MOD | DATA[C] = DATA[A] % DATA[B] |
+| 9 | POW | DATA[C] = DATA[A] ** DATA[B] |
+| 10 | JMP | PC = C |
+| 11 | JGT | if DATA[A] > DATA[B]: PC = C |
+| 12 | JLT | if DATA[A] < DATA[B]: PC = C |
+| 13 | JEQ | if DATA[A] == DATA[B]: PC = C |
+| 14 | OUT | print DATA[A] as a number |
+| 15 | PUT | print DATA[A] as ASCII character (no newline) |
+| 16 | INP | prompt user for input, store in DATA[A] |
+| 17 | ONL | print a newline |
+| 18 | PUTI | print DATA[DATA[A]] as ASCII character (no newline) |
+| 19 | OUTI | print DATA[DATA[A]] as a number |
+| 20 | INPI | prompt user for input, store in DATA[DATA[A]] |
 
 
 ## Usage
