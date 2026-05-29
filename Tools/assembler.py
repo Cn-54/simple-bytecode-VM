@@ -92,3 +92,15 @@ def assemble(program):
         sys.exit(1)
 
     return output
+
+
+if __name__ == "__main__":
+    filename = sys.argv[1]
+    program = []
+    with open(filename, 'r') as file:
+        if filename.endswith(".A"):
+            program = file.read().replace("\n", " ").split(" ") # formats the program to be passed to the assembler
+            program = assemble(program)
+        else:
+            print("wrong file type passed")
+    print(program)

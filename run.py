@@ -1,5 +1,5 @@
 from VM import CPU
-from assembler import assemble
+from Tools.assembler import assemble
 import sys
 
 
