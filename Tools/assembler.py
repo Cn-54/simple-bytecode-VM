@@ -95,7 +95,13 @@ def assemble(program):
             case _:
                 print(f"[Assembler]: instruction {instruction_num} : Unknown opcode: {x}")
                 error = True
+
+                # SKIP REST OF INSTRUCTION SAFELY
                 i += 1
+
+                # try to skip remaining operands (best-effort)
+                while i < len(program) and not program[i].isalpha():
+                    i += 1
                 
 
         instruction_num += 1
