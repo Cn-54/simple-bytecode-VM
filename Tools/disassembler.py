@@ -1,6 +1,18 @@
 import sys
 
+
+def formatProgram(program):
+    output = []
+    tokens = program.replace("\n", "").split(",")
+    for t in tokens:
+        t = t.strip()
+        if t == "":
+            continue
+        output.append(int(t))
+    return output
+
 def disassemble(program):
+    program = formatProgram(program)
     output = []
     i = 0
     while i < len(program):
@@ -13,7 +25,7 @@ def disassemble(program):
                 output.append("NOP")
                 i += 4
             case 1:
-                output.append(f"SET {program[i+1]} {program[i+3]}")
+                output.append(f"SET {program[i+3]} {program[i+1]}")
                 i += 4
             case 2:
                 output.append(f"LOAD {program[i+1]} {program[i+3]}")
@@ -83,7 +95,7 @@ if __name__ == "__main__":
     program = []
     with open(filename, 'r') as file:
         if filename.endswith(".M"):
-            program = [int(x) for x in file.read().replace("\n", "").split(",")] # formates the program from a machine code file
+            program = file.read()
             program = disassemble(program)
         else:
             print("wrong file type passed")
