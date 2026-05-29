@@ -1,6 +1,18 @@
 import sys
 
+
+def formatProgram(program):
+    output = []
+    for line in program.splitlines():
+        line = line.split(";")[0]
+        line = line.strip()
+        if not line:
+            continue
+        output.extend(line.split())
+    return output
+
 def assemble(program):
+    program = formatProgram(program)
     output = []
     error = False
     i = 0
@@ -21,7 +33,7 @@ def assemble(program):
                 output.extend([0, 0, 0, 0])
                 i += 1
             case "SET":
-                output.extend([1, int(program[i+1]), 0, int(program[i+2])])
+                output.extend([1, int(program[i+2]), 0, int(program[i+1])])
                 i += 3
             case "LOAD":
                 output.extend([2, int(program[i+1]), 0, int(program[i+2])])
@@ -99,7 +111,7 @@ if __name__ == "__main__":
     program = []
     with open(filename, 'r') as file:
         if filename.endswith(".A"):
-            program = file.read().replace("\n", " ").split(" ") # formats the program to be passed to the assembler
+            program = file.read()
             program = assemble(program)
         else:
             print("wrong file type passed")
